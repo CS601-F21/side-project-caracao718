@@ -1,6 +1,8 @@
 package com.caracao718.controller;
 
+import com.caracao718.domain.FavoriteLocation;
 import com.caracao718.domain.SysUser;
+import com.caracao718.mapper.FavoriteLocationMapper;
 import com.caracao718.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,8 @@ import java.util.List;
 public class SysUserController {
     @Autowired
     private SysUserService sysUserService;
+    @Autowired
+    private FavoriteLocationMapper favoriteLocationMapper;
 
     /**
      * A method to handle which page will show
@@ -25,8 +29,8 @@ public class SysUserController {
      */
     @RequestMapping("navigate")
     public String navigate (String view,Integer id, Model model, HttpSession session) {
-        // if user has not sing in, the system will return login page
-        if(session.getAttribute("loginUser") == null){
+        // check if user has not sing in, the system will return login page
+        if(session.getAttribute("loginUser") == null && !"signup".equals(view)){
             return "login";
         }
 
@@ -71,4 +75,24 @@ public class SysUserController {
     public List<SysUser> list () {
         return sysUserService.list();
     }
+
+    /**
+     * Sign up method
+     * @param user user form data
+     * @return row number
+     */
+    @RequestMapping("/user/save")
+    public String save (SysUser user, HttpSession session) {
+        sysUserService.insert(user);
+
+        // save my favorite location into table
+        FavoriteLocation o = new FavoriteLocation();
+        o.setUserId(user.getId());
+        o.setLocationId(user.getLocationId());
+        favoriteLocationMapper.insert(o);
+
+        return "login";
+    }
+
+
 }
