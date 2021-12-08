@@ -21,8 +21,11 @@ public class FlightController {
     @ResponseBody
     @RequestMapping("/flight/list")
     public List<Flight> list (Flight flight) {
-
-        return flightService.list(flight);
+        if("".equals(flight.getOriginLocation())){
+            return flightService.listAll();
+        }else{
+            return flightService.list(flight);
+        }
     }
 
 }

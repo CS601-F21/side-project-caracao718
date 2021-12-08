@@ -7,10 +7,10 @@ import java.math.BigDecimal;
 @Data
 public class Flight {
     private Integer id;
-    private Integer originLocationId;
     private String originLocation;
-    private Integer destinationLocationId;
+    private String originAirport;
     private String destinationLocation;
+    private String destinationAirport;
     private String airlineName;
     private String planeNo;
 

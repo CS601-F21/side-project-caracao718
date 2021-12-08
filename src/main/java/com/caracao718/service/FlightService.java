@@ -16,4 +16,8 @@ public class FlightService {
     public List<Flight> list (Flight record) {
         return flightMapper.list(record);
     }
+
+    public List<Flight> listAll () {
+        return flightMapper.listAll();
+    }
 }
