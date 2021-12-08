@@ -54,6 +54,7 @@ public class MountainController {
         model.addAttribute("wind_speed","Wind speed: "+wind.getString("speed")+" M/s");
         model.addAttribute("mountain_name", mountain.getName());
         model.addAttribute("mountain_id", mountainId);
+        model.addAttribute("location_id", locationId);
         return "mountain_detail";
     }
 
