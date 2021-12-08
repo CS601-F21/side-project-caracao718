@@ -53,6 +53,7 @@ public class MountainController {
         model.addAttribute("humidity","Humidity: "+main.getString("humidity")+"%");
         model.addAttribute("wind_speed","Wind speed: "+wind.getString("speed")+" M/s");
         model.addAttribute("mountain_name", mountain.getName());
+        model.addAttribute("mountain_id", mountainId);
         return "mountain_detail";
     }
 
