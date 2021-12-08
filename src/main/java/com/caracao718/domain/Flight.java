@@ -10,7 +10,7 @@ public class Flight {
     private Integer originLocationId;
     private Integer destinationLocationId;
     private String airlineName;
-    private Integer planeNo;
+    private String planeNo;
 
     private String startTimeStr;
     private String endTimeStr;
