@@ -7,5 +7,4 @@ public class Location {
     private Integer id;
     private String name;
     private String airport;
-    private String weather;
 }

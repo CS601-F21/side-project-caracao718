@@ -10,4 +10,5 @@ public class Mountain {
     private Integer locationId;
     private String locationName;
     private String zipCode;
+    private String weather;
 }
