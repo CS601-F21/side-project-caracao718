@@ -1,5 +1,6 @@
 package com.caracao718.service;
 
+import com.caracao718.domain.Flight;
 import com.caracao718.domain.Trip;
 import com.caracao718.mapper.TripMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class TripService {
     public Integer checkExists (Trip record) {
         return tripMapper.checkExists(record);
     }
-    public List<Trip> list (Integer userId) {
+    public List<Flight> list (Integer userId) {
         return tripMapper.list(userId);
     }
 

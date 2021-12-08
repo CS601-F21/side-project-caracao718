@@ -1,5 +1,6 @@
 package com.caracao718.controller;
 
+import com.caracao718.domain.Flight;
 import com.caracao718.domain.Trip;
 import com.caracao718.domain.SysUser;
 import com.caracao718.service.TripService;
@@ -23,7 +24,7 @@ public class TripController {
      */
     @ResponseBody
     @RequestMapping("/trip/list")
-    public List<Trip> list(HttpSession session) {
+    public List<Flight> list(HttpSession session) {
         SysUser user = (SysUser) session.getAttribute("loginUser");
         return tripService.list(user.getId());
     }
