@@ -39,6 +39,14 @@ public class SysUserController {
     }
 
     /**
+     * when input http://localhost:8080/, login page will display
+     */
+    @RequestMapping("/")
+    public String mainPage () {
+        return "login";
+    }
+
+    /**
      * Logout method
      * @param session http session
      * @return login page
