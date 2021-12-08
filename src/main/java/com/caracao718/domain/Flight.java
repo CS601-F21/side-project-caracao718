@@ -8,7 +8,9 @@ import java.math.BigDecimal;
 public class Flight {
     private Integer id;
     private Integer originLocationId;
+    private String originLocation;
     private Integer destinationLocationId;
+    private String destinationLocation;
     private String airlineName;
     private String planeNo;
 

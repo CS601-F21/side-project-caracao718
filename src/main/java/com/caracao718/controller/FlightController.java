@@ -20,8 +20,9 @@ public class FlightController {
      */
     @ResponseBody
     @RequestMapping("/flight/list")
-    public List<Flight> list (Flight hotel) {
-        return flightService.list(hotel);
+    public List<Flight> list (Flight flight) {
+
+        return flightService.list(flight);
     }
 
 }
