@@ -21,7 +21,7 @@ public class WeatherUpdate {
     /**
      * Daily weather updates
      */
-    @Scheduled(initialDelay=1000, fixedDelay=86400000)
+    @Scheduled(initialDelay=86400000, fixedDelay=86400000)
     public void update(){
         List<Mountain> list = mountainService.list();
         for (Mountain mountain : list) {
