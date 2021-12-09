@@ -1,0 +1,56 @@
+.head {
+    height: 100px;
+    background: #244e78;
+    text-align: center;
+}
+
+.content {
+    display: flex;
+}
+
+.content-menu {
+    width: 16%;
+    height: 600px;
+    padding: 10px;
+    color: white;
+    /*background: #4cae4c;*/
+    text-align: center;
+}
+
+.content-body {
+    width: 80%;
+    padding: 20px;
+}
+
+.title {
+    color: white;
+    line-height: 100px;
+}
+
+.form-item-title{
+    width:100px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.form-item-left{
+    margin-left: 23%;
+}
+
+.fr{
+    float:right;
+}
+
+.hide{
+    display: none;
+}
+
+.logout{
+    float: right;
+    margin-right: 73px;
+    font-size: 18px;
+    color: #ffffff;
+}
+.logout:hover{
+    color: #ffffff;
+}
