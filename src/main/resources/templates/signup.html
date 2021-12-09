@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap-table.css" rel="stylesheet">
+  <link href="css/common.css" rel="stylesheet">
+  <style>
+    .form{
+      width: 500px;
+      margin-left: 33%;
+      padding: 10px 90px
+    }
+  </style>
+</head>
+<body>
+  <div class="head">
+    <h2 class="title">The Mountain is Calling</h2>
+  </div>
+
+  <form id="addForm" class="form">
+    <div class="modal-body" form-item-left>
+      <div>
+        <span class="form-item-title">First Name：</span>
+        <input type="text" name="firstName">
+      </div>
+      <div>
+        <span class="form-item-title">Last Name：</span>
+        <input type="text" name="lastName">
+      </div>
+      <div>
+        <span class="form-item-title">Username：</span>
+        <input type="text" name="userName">
+      </div>
+      <div>
+        <span class="form-item-title">Password：</span>
+        <input type="text" name="password">
+      </div>
+      <div>
+        <span class="form-item-title">Email：</span>
+        <input type="text" name="email">
+      </div>
+      <div>
+        <span class="form-item-title">Favorite Location：</span>
+        <select name="locationId" id="locationId"></select>
+      </div>
+      <div>
+        <span class="form-item-title">Ski/Snowboard：</span>
+        <input type="radio" name="snowTool" value="ski">ski
+        <input type="radio" name="snowTool" value="snowboard">snowboard
+        <input type="radio" name="snowTool" value="both">both
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" onclick="signup()" type="button">OK</button>
+    </div>
+  </form>
+
+  <script src="js/jquery-3.3.1.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/bootstrap-table.js"></script>
+  <script>
+    $(function () {
+      $.ajax({
+        url: "/location/list",
+        success: function (data) {
+          let option = data.map(x=>{
+            return '<option value="'+x.id+'">'+x.name+'</option>'
+          });
+          $('#locationId').html(option.join(""))
+        }
+      })
+
+    })
+
+    function signup() {
+      $.ajax({
+        url: "/user/save",
+        data: $("#addForm").serialize(),
+        success: function () {
+          location.href = '/navigate?view=login'
+        }
+      })
+    }
+  </script>
+</body>
+</html>
