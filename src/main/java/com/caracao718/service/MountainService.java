@@ -21,8 +21,8 @@ public class MountainService {
         return mountainMapper.list();
     }
 
-    public void updateWeather (Mountain record){
-        mountainMapper.updateWeather(record);
+    public void updateWeather (Integer id, String weather){
+        mountainMapper.updateWeather(id, weather);
     }
 
     /**

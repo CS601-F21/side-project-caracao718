@@ -25,5 +25,5 @@ public interface MountainMapper {
     List<Mountain> favoriteList2 ();
 
     @Update("update mountain set weather = #{weather} where id = #{id}")
-    void updateWeather (Mountain record);
+    void updateWeather (Integer id, String weather);
 }
