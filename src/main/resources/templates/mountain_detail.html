@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap-table.css" rel="stylesheet">
+  <link href="css/common.css" rel="stylesheet">
+  <style>
+
+  </style>
+</head>
+<body>
+  <div class="head">
+    <h2 class="title">The Mountain is Calling<a href="/logout" class="logout">Logout</a></h2>
+  </div>
+
+  <div class="content">
+    <div class="content-menu">
+      <ul class="nav nav-pills nav-stacked">
+        <li>
+          <a href="/navigate?view=mountain">Mountains</a>
+        </li>
+        <li>
+          <a href="/navigate?view=favorite_location">My Favorite Locations</a>
+        </li>
+        <li>
+          <a href="/navigate?view=favorite_mountain">My Favorite Mountains</a>
+        </li>
+        <li>
+          <a href="/navigate?view=trip">My Trip</a>
+        </li>
+        <li class="active">
+          <a href="#">Mountain Detail</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="content-body">
+
+      <div class="page-header">
+        <h3 th:text="${mountain_name}+ ' Weather'"></h3>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div th:text="${weather}"></div>
+          <div th:text="${temp_min}"></div>
+          <div th:text="${temp_max}"></div>
+          <div th:text="${pressure}"></div>
+          <div th:text="${humidity}"></div>
+          <div th:text="${wind_speed}"></div>
+        </div>
+      </div>
+
+      <div class="page-header">
+        <h3>The local hotel</h3>
+      </div>
+      <table id="hotelId"></table>
+
+      <div class="page-header">
+        <h3 style="display: inline;margin-right: 20px;">The local flight</h3>
+        <span>From</span>
+        <select id="originLocation" onchange="queryFlightList()">
+          <option value="">...</option>
+          <option value="New York City">New York City</option>
+          <option value="Boston">Boston</option>
+          <option value="San Francisco">San Francisco</option>
+          <option value="Los Angeles">Los Angeles</option>
+        </select>
+      </div>
+      <table id="flightId"></table>
+    </div>
+
+  </div>
+
+  <script src="js/jquery-3.3.1.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/bootstrap-table.js"></script>
+  <script>
+    queryHotelList();
+    queryFlightList();
+
+    /**
+     * query hotel list
+     */
+    function queryHotelList() {
+      let mountainId = [[${mountain_id}]]
+      $('#hotelId').bootstrapTable({
+        url: '/hotel/list?mountainId='+mountainId,
+        // pagination: true,
+        // sortable: true,
+        headerStyle: function (column) {
+          return {
+            css: {
+              background: '#5e5e5e',
+              color: '#fff'
+            }
+          }
+        },
+        // search:true,
+        columns: [ {
+          field: 'id',
+          title: 'Id'
+        },{
+          field: 'name',
+          title: 'Hotel Name'
+        },{
+          field: 'mark',
+          title: 'Hotel Mark'
+        },{
+          field: 'bed',
+          title: 'Bed number'
+        },{
+          field: 'address',
+          title: 'Address'
+        },{
+          field: 'phone',
+          title: 'Contact phone'
+        },{
+          field: 'price',
+          title: 'Price($)'
+        }]
+      })
+    }
+
+    /**
+     * query flight list start on current location
+     */
+    function queryFlightList() {
+      $("#flightId").bootstrapTable('destroy');
+      $('#flightId').bootstrapTable( {
+        url: '/flight/list?originLocation='+ $('#originLocation').val(),
+        // pagination: true,
+        // sortable: true,
+        headerStyle: function (column) {
+          return {
+            css: {
+              background: '#5e5e5e',
+              color: '#fff'
+            }
+          }
+        },
+        // search:true,
+        columns: [ {
+          field: 'id',
+          title: 'Id'
+        },{
+          field: 'airlineName',
+          title: 'Airline'
+        },{
+          field: 'planeNo',
+          title: 'Plane No'
+        },{
+          field: 'startTimeStr',
+          title: 'Start'
+        },{
+          field: 'endTimeStr',
+          title: 'End'
+        },{
+          field: 'originLocation',
+          title: 'From',
+          formatter: function (value, row) {
+            return value+"("+row.originAirport+")";
+          }
+        },{
+          field: 'destinationLocation',
+          title: 'To',
+          formatter: function (value, row) {
+            return value+"("+row.destinationAirport+")";
+          }
+        },{
+          field: 'price',
+          title: 'Price($)'
+        }, {
+          field: 'id',
+          title: 'Add Trip',
+          formatter: function (value, row, index) {
+            return "<button class=\"btn btn-success btn-sm mb-5px\" onclick='addToMyTrip(" + row.id + ")'>Add to my trip</button>";
+          }
+        }]
+      })
+    }
+
+    function addToMyTrip(flightId) {
+      $.ajax({
+        url: "/trip/add",
+        data: {
+          flightId: flightId
+        },
+        success: function (data) {
+          alert(data)
+          window.location.reload();
+        }
+      })
+    }
+
+  </script>
+</body>
+</html>
