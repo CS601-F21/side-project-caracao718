@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap-table.css" rel="stylesheet">
+  <link href="css/common.css" rel="stylesheet">
+  <style>
+
+  </style>
+</head>
+<body>
+  <div class="head">
+    <h2 class="title">The Mountain is Calling<a href="/logout" class="logout">Logout</a></h2>
+  </div>
+
+  <div class="content">
+    <div class="content-menu">
+      <ul class="nav nav-pills nav-stacked">
+        <li>
+          <a href="/navigate?view=mountain">Mountains</a>
+        </li>
+        <li>
+          <a href="/navigate?view=favorite_location">My Favorite Locations</a>
+        </li>
+        <li class="active">
+          <a href="/navigate?view=favorite_mountain">My Favorite Mountains</a>
+        </li>
+        <li>
+          <a href="/navigate?view=trip">My Trip</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="content-body">
+      <table id="tableId"></table>
+    </div>
+
+  </div>
+
+  <script src="js/jquery-3.3.1.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/bootstrap-table.js"></script>
+  <script>
+    $(function () {
+      queryFavoriteList()
+    })
+
+    /**
+     * query my favorite location list
+     */
+    function queryFavoriteList() {
+      $('#tableId').bootstrapTable({
+        url: '/favorite_mountain/list',
+        // pagination: true,
+        // sortable: true,
+        headerStyle: function (column) {
+          return {
+            css: {
+              background: '#5e5e5e',
+              color: '#fff'
+            }
+          }
+        },
+        // search:true,
+        columns: [ {
+          field: 'locationName',
+          title: 'Location'
+        },{
+          field: 'mountainName',
+          title: 'Mountain'
+        }, {
+          field: 'id',
+          title: 'Operation',
+          formatter: function (value, row, index) {
+            if(row.id){
+              return "<button class=\"btn btn-danger btn-sm mb-5px\" onclick='deleteById(" + row.id + ")'>Delete</button>"
+            }else{
+              return "<button class=\"btn btn-success btn-sm mb-5px\" onclick='add(" + row.mountainId + ")'>Add</button>";
+            }
+          }
+        }]
+      })
+    }
+
+    function deleteById(id) {
+      $.ajax({
+        url: "/favorite_mountain/delete",
+        data: {
+          id
+        },
+        success: function () {
+          window.location.reload();
+        }
+      })
+    }
+
+    function add(mountainId) {
+      $.ajax({
+        url: "/favorite_mountain/add",
+        data: {
+          mountainId: mountainId
+        },
+        success: function () {
+          window.location.reload();
+        }
+      })
+    }
+
+  </script>
+</body>
+</html>
