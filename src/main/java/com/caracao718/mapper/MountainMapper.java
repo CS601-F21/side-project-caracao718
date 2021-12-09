@@ -23,4 +23,7 @@ public interface MountainMapper {
             "from mountain a join favorite_location b on a.location_id = b.location_id " +
             "join location c on a.location_id = c.id")
     List<Mountain> favoriteList2 ();
+
+    @Update("update mountain set weather = #{weather} where id = #{id}")
+    void updateWeather (Mountain record);
 }

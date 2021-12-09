@@ -21,6 +21,10 @@ public class MountainService {
         return mountainMapper.list();
     }
 
+    public void updateWeather (Mountain record){
+        mountainMapper.updateWeather(record);
+    }
+
     /**
      * Query my favorite mountain list
      * @return list
