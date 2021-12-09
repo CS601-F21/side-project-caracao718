@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sing in</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap-table.css" rel="stylesheet">
+  <style>
+    *{
+      margin:0px;
+      padding:0px;
+    }
+    body{
+      background: url(/img/bg.jpg);
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    h1,span {
+      font-weight: bold;
+    }
+    .login-form {
+      width: 420px;
+      position: absolute;
+      left: 800px;
+      top: 200px;
+    }
+    .login-title{
+      width:80px;
+      display: inline-block;
+      margin-bottom: 25px;
+    }
+    .login-btn{
+      width: 99px;
+      background: green;
+      color: #fff;
+      height: 35px;
+      border: none;
+      border-radius: 5px;
+      right: 34px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-form">
+    <h1>The Mountain is Calling</h1>
+    <form id="loginForm" style="margin-top: 50px;width: 300px;right: 0;position: absolute;">
+      <div>
+        <span class="login-title">Username</span>
+        <input type="text" name="userName" id="username" value="1">
+      </div>
+      <div>
+        <span class="login-title">Password</span>
+        <input type="password" name="password" id="password" value="1">
+      </div>
+      <div>
+        <input type="button" id="loginBtn" class="login-btn" value="Sign in">
+        <input type="button" onclick="location.href='/navigate?view=signup'" class="login-btn" value="Sign up">
+      </div>
+    </form>
+  </div>
+
+  <script src="js/jquery-3.3.1.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/bootstrap-table.js"></script>
+  <script>
+    $("#loginBtn").click(function () {
+      if($('#username').val() === ''){
+        alert('Username is required')
+        return
+      }
+      if($('#password').val() === ''){
+        alert('Password is required')
+        return
+      }
+
+      $.ajax({
+        url: "login",
+        data: $("#loginForm").serialize(),
+        success: function (ret) {
+          if (ret != 1) {
+            alert('Username or password is not correct！')
+          } else {
+            window.location.href = '/navigate?view=mountain'
+          }
+        }
+      })
+    })
+  </script>
+</body>
+</html>
