@@ -11,7 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class MountainController {
@@ -27,6 +30,45 @@ public class MountainController {
     @RequestMapping("/mountain/list")
     public List<Mountain> list () {
         return mountainService.list();
+    }
+
+    /**
+     * Query my favorite mountains and all the mountains in my favorite location
+     * @return mountain list
+     */
+    @ResponseBody
+    @RequestMapping("/mountain/favorite/list")
+    public List<Mountain> favoriteList () {
+        Set<Integer> set = new HashSet<>();
+
+        List<Mountain> list1 = mountainService.favoriteList1();
+        List<Mountain> list2 = mountainService.favoriteList2();
+
+        for (Mountain mountain : list1) {
+            mountain.setFavorite(true);
+            set.add(mountain.getId());
+        }
+        for (Mountain mountain : list2) {
+            mountain.setFavorite(true);
+            set.add(mountain.getId());
+        }
+
+        // after remove, list3 contains non favorite mountains
+        List<Mountain> list3 = mountainService.list();
+        Iterator<Mountain> it = list3.iterator();
+        while (it.hasNext()) {
+            Mountain mountain = it.next();
+            if(set.contains(mountain.getId())){
+                it.remove();
+            }else{
+                mountain.setFavorite(false);
+            }
+        }
+
+        list1.addAll(list2);
+        list1.addAll(list3);
+
+        return list1;
     }
 
     /**

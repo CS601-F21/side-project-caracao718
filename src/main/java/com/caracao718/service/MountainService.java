@@ -21,4 +21,20 @@ public class MountainService {
         return mountainMapper.list();
     }
 
+    /**
+     * Query my favorite mountain list
+     * @return list
+     */
+    public List<Mountain> favoriteList1 () {
+        return mountainMapper.favoriteList1();
+    }
+
+    /**
+     * Query all the mountains in my favorite location
+     * @return list
+     */
+    public List<Mountain> favoriteList2 () {
+        return mountainMapper.favoriteList2();
+    }
+
 }
