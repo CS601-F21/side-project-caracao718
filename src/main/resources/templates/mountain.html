@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap-table.css" rel="stylesheet">
+  <link href="css/common.css" rel="stylesheet">
+  <style>
+    .cover{
+      width: 200px;
+      height: 270px !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="head">
+    <h2 class="title">
+      The Mountain is Calling
+      <a href="/logout" class="logout">Logout</a>
+    </h2>
+  </div>
+
+  <div class="content">
+    <div class="content-menu">
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active">
+          <a href="/navigate?view=mountain">Mountains</a>
+        </li>
+        <li>
+          <a href="/navigate?view=favorite_location">My Favorite Locations</a>
+        </li>
+        <li>
+          <a href="/navigate?view=favorite_mountain">My Favorite Mountains</a>
+        </li>
+        <li>
+          <a href="/navigate?view=trip">My Trip</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="content-body">
+      <div id="tableId"></div>
+    </div>
+
+  </div>
+
+  <script src="js/jquery-3.3.1.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/bootstrap-table.js"></script>
+  <script>
+    $(function () {
+      queryList()
+    })
+
+    function queryList(){
+      $.ajax({
+        url: "/mountain/favorite/list",
+        success: function (data) {
+          let all = '', row = []
+          for (var i = 0; i < data.length; i++) {
+            let mountain = data[i]
+            let favoriteIcon = mountain.favorite ? '<img src="img/favorite.png" title="My favorite" style="width: 24px;">' : ''
+            let col = `<div class="col-sm-6 col-md-3">
+                          <div class="thumbnail">
+                            <img class="cover" src="img/${mountain.name}.png" onerror="this.src='img/default.png'">
+                            <div class="caption">
+                              <h4>
+                                ${favoriteIcon}
+                                ${mountain.name}
+                              </h4>
+                              <p>
+                                Location：${mountain.locationName}
+                                <button type="button" class="btn btn-primary btn-sm fr" onclick="viewDetail(${mountain.id}, ${mountain.locationId})">Detail</button>
+                              </p>
+                            </div>
+                          </div>
+                        </div>`
+            row.push(col)
+
+            if(row.length == 4){
+              all += '<div class="row">'+row.join(' ')+'</div>'
+              row = []
+            }
+          }
+
+          if(row.length>0){
+            all += '<div class="row">'+row.join(' ')+'</div>'
+          }
+
+          $("#tableId").html(all)
+        }
+      })
+    }
+
+    function viewDetail(mountainId, locationId) {
+      window.location.href = '/detail?locationId='+locationId+'&mountainId='+mountainId
+    }
+
+  </script>
+</body>
+</html>
