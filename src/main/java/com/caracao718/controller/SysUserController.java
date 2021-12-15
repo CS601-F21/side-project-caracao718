@@ -29,7 +29,7 @@ public class SysUserController {
      */
     @RequestMapping("navigate")
     public String navigate (String view,Integer id, Model model, HttpSession session) {
-        // check if user has not sing in, the system will return login page
+        // check if user has not signed in, the system will return login page
         if(session.getAttribute("loginUser") == null && !"signup".equals(view)){
             return "login";
         }
