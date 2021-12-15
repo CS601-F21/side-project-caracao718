@@ -1,7 +1,7 @@
 The Mountain is Calling
 ============
 
-### Due - A ski/snowboard trip organizing & planning app
+### A ski/snowboard trip organizing & planning app
 
 The Mountain is Calling project is designed to make skiers and snowboarders' winter planning more convenient. The website will generate a list of mountains in the US,
 along with the weather condition. 
